@@ -1,0 +1,3 @@
+[submodule "assets/lib/lightboxSSA"]
+	path = assets/lib/lightboxSSA
+	url = git@github:starsoftanalysis/lightboxSSA

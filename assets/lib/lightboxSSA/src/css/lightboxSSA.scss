@@ -1,0 +1,189 @@
+/* lightboxSSA.scss */
+
+// LightboxSSA v2.50
+// Copyright 2020 Chris Dennis
+
+//    This file is part of LightboxSSA.
+//
+//    LightboxSSA is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    LightboxSSA is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
+
+// TODO
+// -- see https://freebiesupply.com/blog/css-arrows/ for fancy responsive < > arrows
+// -- see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
+//    re stacking contexts -- zstart can be anything here
+
+// ?? Use will-change: transform, opacity;  to make sure fadeTo works???
+
+// Variables
+$imageBorder: 1vh;
+$imageRadius: ($imageBorder / 2);
+$zstart: 10;
+$fadeDuration: 600ms;  // Default value -- gets changed in JS
+@mixin setTransition {
+  -webkit-transition: opacity $fadeDuration ease-in-out;
+  -moz-transition:    opacity $fadeDuration ease-in-out;
+  -ms-transition:     opacity $fadeDuration ease-in-out;
+  -o-transition:      opacity $fadeDuration ease-in-out;
+  transition:         opacity $fadeDuration ease-in-out;
+  //transition-property: opacity;
+  //animation-fill-mode: forwards;  // ??? see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
+}
+
+body.lb-disable-scrolling {
+    overflow: hidden;
+}
+
+[data-lightbox] {
+    cursor: pointer;
+}
+
+#lb-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: $zstart;
+    background: gray;
+    opacity: 0; // initially
+    @include setTransition;
+    cursor: url(../images/closeCursorSSA.png) 13 14, pointer;
+}
+
+// lb-nav and lb-prev/next sit behind the flex/figure/image, 
+// catching clicks/touches
+#lb-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: $zstart+1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    //touch-action: none;
+    opacity: 1;
+}
+#lb-prev { //, #lb-image1-prev, #lb-image2-prev {
+//?    opacity: 1;
+//    background: green; opacity: 0.3;
+    height: 50%;
+    width: 50%;
+    z-index: $zstart+2;
+    pointer-events: auto;
+    cursor: url(../images/prevCursorSSA.png) 2 17, pointer;
+}
+#lb-next { // , #lb-image1-next, #lb-image2-next {
+//?    opacity: 1;
+//    background: green; opacity: 0.3;
+    height: 50%;
+    width: 50%;
+    z-index: $zstart+2;
+    pointer-events: auto;
+    cursor: url(../images/nextCursorSSA.png) 18 17, pointer;
+}
+
+.lb-flex {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;   // must fill the window for centering to work
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    //touch-action: none;
+    z-index: $zstart+3;
+    @include setTransition;
+}
+
+figure.lb-figure {
+  display: block;
+  position: relative;
+  margin: 0;
+  z-index: $zstart+4;
+  //max-width: 90vw;     // These may get adjusted by JS   now done on the figure instead
+  //max-height: 90vh;
+  figcaption {
+    position: absolute;
+    left: $imageBorder;
+    bottom: $imageBorder;
+    background-color: rgba(255, 255, 255, 0.6);
+    width: calc(100% - #{2 * $imageBorder});
+    max-height: calc(100% - #{2 * $imageBorder});
+    text-align: center;
+    z-index: 2; // relative to figure  $zstart+6;
+  }
+}
+
+$onImageClickAreaHeight: 100%;
+#lb-image1-prev, #lb-image2-prev {
+  position: absolute;
+  //border: 1px blue solid;
+  width: 20%;
+  height: $onImageClickAreaHeight;
+  left: 0;
+  top: #{(100% - $onImageClickAreaHeight) / 2};
+  cursor: url(../images/prevCursorSSA.png) 2 17, pointer;
+  pointer-events: auto;
+  z-index: $zstart+7;
+}
+#lb-image1-next, #lb-image2-next {
+  position: absolute;
+  //border: 1px red solid;
+  width: 20%;
+  height: $onImageClickAreaHeight;
+  right: 0;
+  top: #{(100% - $onImageClickAreaHeight) / 2};
+  cursor: url(../images/nextCursorSSA.png) 18 17, pointer;
+  pointer-events: auto;
+  z-index: 3; // relative to figure  $zstart+7;
+}
+
+#lb-image1, #lb-image2 {
+    border: white $imageBorder solid;
+    border-radius: $imageRadius;
+    // maybe, but will need to adjust figcap etc.   box-sizing: content-box; // size image correctly, then add border
+    // no position: absolute;
+    max-width: 90vw;     // These may get adjusted by JS  
+    max-height: 90vh;
+    width: 100%;
+    height: 100%;
+    z-index: 1; // relative to figure  $zstart+5;
+}
+#lb-image1 {
+    pointer-events: auto;
+}
+#lb-image2 {
+    pointer-events: auto; /* initially */ // FIXME check which is used first -- is this needed?
+}
+
+/*
+// TEMP:
+#lb-overlay:hover {
+    border: solid 1px red;
+}
+#lb-prev:hover, #lb-next:hover {
+    border: solid 1px green;
+}
+#lb-image1:hover, #lb-image2:hover {
+    border: solid 1px yellow;
+}
+#lb-image1-next:hover, #lb-image2-next:hover, #lb-image1-prev:hover, #lb-image2-prev:hover {
+    border: solid 1px blue;
+}
+*/

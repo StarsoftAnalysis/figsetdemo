@@ -1,7 +1,7 @@
 // added this line manually:
 module github.com/StarsoftAnalysis/figsettest
 
-go 1.21.4
+go 1.21
 
 // local for now: require github.com/gohugoio/hugo-mod-bootstrap-scss/v5 v5.20300.20200 // indirect
 

@@ -46,7 +46,6 @@
               {{ range .Site.Menus.main.ByWeight }}
                 {{ if .HasChildren }}
                   <li class="nav-item rounded h3 px-2 py-0 mx-2 my-0 bg-primary dropdown {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}" style="flex: 1">
-                    {{/* Bootstrap crashes if this a has an href e.g. '/docs/' with data-bs-toggle=dropdown. */}}
                     <a class="nav-link p-0  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ .Name }}</a>
                     <ul class="sub-menu dropdown-menu rounded bg-primary px-1 pt-0 pb-1 mx-1 my-0" aria-labelledby="navbarDropdown">
                       {{ range .Children }}

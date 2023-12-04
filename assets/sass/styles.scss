@@ -17,11 +17,11 @@ body {
 // see https://blog.fullstackdigital.com/how-to-use-hugo-template-variables-in-scss-files-in-2018-b8a834accce
 .banner-background {
   //background-color: green;
-  @if $banner_background_image_url {
-    background-image: url($banner_background_image_url);
-    background-position: 100% center;
-    background-size: cover;
-  }
+  //@if $banner_background_image_url {
+  //  background-image: url($banner_background_image_url);
+  //  background-position: 100% center;
+  //  background-size: cover;
+  //}
 }
 // TODO media query to choose appropriate size of banner image, e.g
 /*

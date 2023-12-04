@@ -1,7 +1,6 @@
 {{/* partials/head.html */}}
 
-{{/* Javascript: bundles bootstrap etc. together, but only include lightbox on pages that use it */}}
-{{/* Using 'defer' to allow this in the head rather than at the end of the body */}}
+{{- /* bootstrap etc. js stuff removed -- see e.g. PSA for how it was done */ -}}
 
 {{/* Package JS using Hugo's js.Build (aka esbuild), with these parameters: */}}
 {{ $jsbExternals := slice }}
@@ -11,48 +10,6 @@
 {{/* $target = "chrome58,firefox57,safari11,edge16" */}}
 {{/* NOTE can't do ES6 -- esbuild can't transform 'class' syntax to es5 ('yet') */}}
 {{ $jsbDftOpts := dict "externals" $jsbExternals "defines" $jsbDefines "minify" false "target" $target "format" "iife" }}
-
-{{/* bootstrap stuff etc. -- see https://simpleit.rocks/golang/hugo/customizing-bootstrap-with-hugo-pipes/ */}}
-{{/* Import as separate scripts for dev; concat and minify for prod */}}
-
-{{ $bootstrap := resources.Get "lib/bootstrap/dist/js/bootstrap.bundle.js" }}{{/* bundle includes popper */}}
-{{ $bootstrapmap := resources.Get "lib/bootstrap/dist/js/bootstrap.bundle.js.map" }}
-
-{{/* Can't get the jsbuild thing to work now...        if .Site.IsServer */}}
-{{ if true }}
-
-  {{/* This is how to include other scripts -- do the resources.Get this as above
-  {{ if not $jquery }}
-    {{ warnf "Failed to load jquery js" }}
-  {{ else }}
-    {{ $jsbOpts := merge $jsbDftOpts (dict "targetPath" "js/jquery.js") }}
-    {{ $js := $jquery | js.Build $jsbOpts }}
-    <script src="{{ $js.RelPermalink }}" defer></script>
-  {{ end }}
-  */}}
-
-  {{ if or (not $bootstrap) (not $bootstrapmap) }}
-    {{ errorf "Failed to load bootstrap js or map" }}
-  {{ else }}
-    {{ $jsbOpts := merge $jsbDftOpts (dict "targetPath" "js/bootstrap.js") }}
-    {{ $js := $bootstrap | js.Build $jsbOpts }}
-    <script src="{{ $js.RelPermalink }}" defer></script>
-    {{/* Not used: $map := slice $bootstrapmap | resources.Concat "js/bootstrap.map" */}}
-    <script>
-      {{/* Is this how to get the map to work?  Surprisingly, it seems to. */}}
-      /*# sourceMappingURL={{ $bootstrapmap.RelPermalink }} */
-    </script>
-  {{ end }}
-
-{{ else }}{{/* 'production' - combine into one bundle */}}
-
-  {{ $jsbOpts := merge $jsbDftOpts (dict "targetPath" "js/bundle.js") }}
-  {{/* Any other scripts (none currently) can be added to this slice: */}}
-  {{ $js := slice $bootstrap | resources.Concat "js/unused.js" | js.Build $jsbOpts | fingerprint }}
-  {{/* TODO how to add the map to the bundle, if needed? */}}
-  <script src="{{ $js.RelPermalink }}" defer integrity="{{ $js.Data.Integrity }}"></script>
-
-{{ end }}
 
 {{/* lightboxSSA is separate because it's only needed on some pages, as requested via the frontmatter */}}
 {{/* FIXME we do resources.Get twice here */}}

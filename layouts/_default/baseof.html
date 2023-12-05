@@ -6,7 +6,6 @@
   <meta charset="utf-8">
   <link rel="shortcut icon" href="{{ .Site.Params.favicon }}" type=image/x-icon>
 
-  {{/* partial "meta.html" . */}}
   {{ partial "head.html" . }}
 
   {{ block "head" . }}
@@ -19,22 +18,6 @@
     <!-- menu bar with built-in title -->
     <div class="container xbg-primary mb-3">
       <div class="row banner-background">
-        <a class=col-sm href="/">
-          <div class="navbar-brandx pt-2"><!-- navbar-brand makes the title NOT wrap on small screens -->
-            <h1 class="d-inline-block">
-              {{- $avslogo := resources.Get "images/avs-logo-large-tr.png" -}}{{/* relative to /assets */}}
-              {{- $avslogo2 := resources.Get "images/avs-logo-words.jpg" -}}{{/* relative to /assets */}}
-              {{- if $avslogo -}}
-                {{- $logowidth := 250 -}}
-                {{- $avslogosmall := $avslogo.Resize (printf "x%d" $logowidth) -}}
-                <img src="{{ $avslogosmall.RelPermalink }}" class="mw-100 align-middle" width="{{ $logowidth }}" alt="{{ .Site.Params.Title }}">
-              {{- else -}}
-                <span class="rounded px-2 bg-primary">{{- .Site.Params.Title -}}</span>
-              {{- end -}}
-            </h1>
-            {{ with .Site.Params.Subtitle }}<h2 class="d-inline-block rounded px-2 bg-primary">{{ . }}</h2>{{ end }}
-          </div>
-        </a>
         <nav class="navbar col-sm navbar-expand-md navbar-light">
           <!-- <a class="navbar-brand" href="#">Navbar</a> -->
           <button class="navbar-toggler p-1 bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,86 +48,16 @@
       </div>
     </div>
 
-    {{- /*
-    {{- if templates.Exists "partials/figrow.html" -}}
-      {{ warnf "************* figrow found ok" }}
-    {{ else }}
-      {{ warnf "************* figrow not found" }}
-    {{- end -}}
-    */ -}}
-
     <div id="main">
       <div class="container">
         <div class="row">
-          {{- if and (default false .Site.Params.Sidebar.Enabled) (eq "left" (default "right" .Site.Params.Sidebar.Style)) }}
-          { partial "sidebar_container.html" . }
-          {{- end -}}  
           <div class="col-md" id="content">
             {{ block "main" . }}
             {{ end }}
           </div>
-          {{- if and (default false .Site.Params.Sidebar.Enabled) (eq "right" (default "right" .Site.Params.Sidebar.Style)) }}
-          { partial "sidebar_container.html" . }
-          {{- end -}}                
         </div>
       </div>
     </div>
 
-    {{ block "footer" . }}
-    <div class="footer-container" style="">
-      <div class="container">
-        <footer>
-          <div class="row">
-            {{/* TODO use 'sections' for the content here */}}
-            <div class="col-md">
-              Avon Valley Shed<br>
-              Fordingbridge<br>
-              Hampshire
-            </div>
-            <div class="col-md">
-              {{ if .Site.Params.email }}
-                {{- $emailicon := resources.Get "images/email-icon-128.png" -}}{{/* relative to /assets */}}
-                {{- if $emailicon -}}
-                  {{- $emailicon16 := $emailicon.Resize "x16" }}
-                  <img src="{{ $emailicon16.RelPermalink }}" height=16 style="vertical-align: baseline;" alt="email icon"> 
-                {{ else }}
-                  Email: 
-                {{ end -}}
-                <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a><br>
-              {{ end }}
-              {{ if .Site.Params.facebookUrl }}
-                {{- $fblogo := resources.Get "images/f_logo_RGB-Hex-Blue_512.png" -}}{{/* relative to /assets */}}
-                {{- if $fblogo -}}
-                  {{- $fblogo16 := $fblogo.Resize "x16" }}
-                  <img src="{{ $fblogo16.RelPermalink }}" height=16 style="vertical-align: baseline;" alt="Facebook icon"> 
-                {{ else -}}
-                  Facebook:
-                {{ end -}}
-                <a href="{{ .Site.Params.facebookUrl }}" target="_blank">{{ .Site.Params.facebookId | default .Site.Params.title }}</a><br>
-              {{ end }}
-              {{ if .Site.Params.twitter }}
-                {{- $twlogo := resources.Get "images/Twitter_Logo_Blue.png" -}}{{/* relative to /assets */}}
-                {{- if $twlogo -}}
-                  {{- $twlogo16 := $twlogo.Resize "x16" }}
-                  <img src="{{ $twlogo16.RelPermalink }}" height=16 style="vertical-align: baseline;" alt="Twitter icon"> 
-                {{ else -}}
-                  Twitter:
-                {{ end -}}
-                <a href="https://twitter.com/{{ .Site.Params.twitter }}" target="_blank">@{{ .Site.Params.twitter }}</a>
-              {{ end }}
-            </div>
-            <div class="col-md">
-              {{ if .Site.Params.charitynum }}
-                Registered Charity No.&nbsp;{{ .Site.Params.charitynum }}<br>
-              {{ end }}
-              {{ .Site.Params.copyright }}
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-    {{ end }}
-
-    {{ partial "bodyend.html" . }}
 </body>
 </html>

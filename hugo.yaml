@@ -1,87 +1,63 @@
 # Leave baseURL empty for relative urls?
 # see https://gohugo.io/content-management/urls/
 # Proper value is added in serve/deploy script
-baseURL = ""
-#? relativeURLs = true
-#? uglyURLs = true
-canonifyURLs = false
+baseURL:  ""
+#? relativeURLs:  true
+#? uglyURLs:  true
+canonifyURLs:  false
 
-title = "Figset Testing"
-timeout = "5m"
+title:  "Figset Demonstration Site"
+timeout:  "5m"
 
-[module]
-#[module.hugoVersion]
-#min = "0.64.0   only need this in something being imported
-#extended = true
+module:
+  imports:
+    - path: github.com/StarsoftAnalysis/figset
+    - path: github.com/StarsoftAnalysis/lightboxSSA
 
-#    [[module.mounts]]
-#    source = "page/index.md"
-#    target = "content/hugo-icons-listing.md"
-#    lang = "en"
-#
-#    [[module.mounts]]
-#    source = "page/template.html"
-#    target = "layouts/_default/hugo-icons-listing.html"
-#
-#    [[module.mounts]]
-#    source = "partials"
-#    target = "layouts/partials/hugo-icons"
-#
-#    [[module.imports]]
-#    path = "github.com/twbs/icons"
-#
-#      [[module.imports.mounts]]
-#      source = "icons"
-#      target = "assets/hugo-icons/icons"
-[[module.imports]]
-    path = "github.com/StarsoftAnalysis/figset"
-#[[module.imports]]
-    # need bootstrap hardcoded because that's what local SASS is set up for
-    #path = "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
+params:
+  sitecolour:  "#e1d3b8"
+  figset:
+    size:  "small"
+    sharpen:  false
+    align:  "start"
+    position:  "top"
+    sameheight:  true
 
-[params]
-  sitecolour = "#e1d3b8"
-  [params.figset]
-    size = "small"
-    sharpen = false
-    align = "start"
-    position = "top"
-    sameheight = true
-
-[imaging]
+imaging:
   # Default resample filter used for resizing. Default is Box,
   # a simple and fast averaging filter appropriate for downscaling.
   # See https://github.com/disintegration/imaging
   # box | Lanczos | ...
-  resampleFilter = "Lanczos"
+  resampleFilter:  "Lanczos"
   # TODO changing jpg/png here doesn't seem to affect figset
-  format = "jpg"
+  format:  "jpg"
   # Default JPEG quality setting. Default is 75.
-  quality = 90
+  quality:  90
   # Anchor used when cropping pictures.
   # Default is "smart" which does Smart Cropping, using https://github.com/muesli/smartcrop
   # Smart Cropping is content aware and tries to find the best crop for each image.
   # Valid values are Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
-  #anchor = "smart"
+  #anchor:  "smart"
   # Default background color. 
   # Hugo will preserve transparency for target formats that support it,
   # but will fall back to this color for JPEG.
   # Expects a standard HEX color string with 3 or 6 digits.
-  #bgColor = "#ffffff"
-  [imaging.exif]
+  #bgColor:  "#ffffff"
+  exif:
     # Regexp matching the fields you want to Include from the (massive) set of Exif info
     # available. As we cache this info to disk, this is for performance and
     # disk space reasons more than anything.
     # If you want it all, put ".*" in this config setting.
     # Note that if neither this or ExcludeFields is set, Hugo will return a small
     # default set.
-    includeFields = ""
+    includeFields:  ""
     # Regexp matching the Exif fields you want to exclude. This may be easier to use
     # than IncludeFields above, depending on what you want.
-    excludeFields = ".*"
+    excludeFields:  ".*"
     # Hugo extracts the "photo taken" date/time into .Date by default.
     # Set this to true to turn it off.
-    disableDate = true
+    disableDate:  true
     # Hugo extracts the "photo taken where" (GPS latitude and longitude) into
     # .Long and .Lat. Set this to true to turn it off.
-    disableLatLong = true
+    disableLatLong:  true
+

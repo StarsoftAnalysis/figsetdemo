@@ -2,3 +2,5 @@ github.com/StarsoftAnalysis/figset v0.0.0-20231130143910-e2d251957829 h1:6gFINhe
 github.com/StarsoftAnalysis/figset v0.0.0-20231130143910-e2d251957829/go.mod h1:j3jYA/F4lIKgCMARDzw6fWX6lrEG+UkpIkHnkPkgnI8=
 github.com/StarsoftAnalysis/figset v0.0.0-20231130145244-d7f28af8f657 h1:t+12zPaHkYkiyK3B+epsKA9X67DWZwAZaAUfhLd93lU=
 github.com/StarsoftAnalysis/figset v0.0.0-20231130145244-d7f28af8f657/go.mod h1:j3jYA/F4lIKgCMARDzw6fWX6lrEG+UkpIkHnkPkgnI8=
+github.com/StarsoftAnalysis/lightboxSSA v0.0.0-20231205170733-e14cae64cd22 h1:RYAazpZKSnHvLDcwWAlPljMhcoNR/6EZeGmsSInxu9Q=
+github.com/StarsoftAnalysis/lightboxSSA v0.0.0-20231205170733-e14cae64cd22/go.mod h1:6R1D90B4bTGCDKP/Zu/uWwGzHhET6v5XvXcrP/L9wlI=

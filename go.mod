@@ -1,7 +1,7 @@
 // added this line manually:
 module github.com/StarsoftAnalysis/figsettest
 
-go 1.21.4
+go 1.21
 
 require (
 	github.com/StarsoftAnalysis/figset v0.0.0-20231203113136-4cea88818610 // indirect
